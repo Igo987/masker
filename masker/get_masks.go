@@ -1,4 +1,4 @@
-package main
+package masker
 
 func GetMasksLInks(s string, url string) string {
 	arrWords := getArrWords(s)
@@ -27,13 +27,16 @@ func GetMasksLInks(s string, url string) string {
 
 func getArrWords(s string) []string {
 	var result []string
-	byteWord := make([]rune, 0, 10)
+	byteWord := make([]byte, 0, 100)
 	for _, item := range s {
-		byteWord = append(byteWord, item)
+		byteWord = append(byteWord, byte(item))
+
 		if (item == ' ') || (item == '\n') || (item == ',') || (item == '-') {
 			result = append(result, string(byteWord))
+			// result = append(result, " ")
 			byteWord = nil
 		}
 	}
+	result = append(result, string(byteWord))
 	return result
 }
