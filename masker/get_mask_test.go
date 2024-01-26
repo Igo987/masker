@@ -17,7 +17,7 @@ func TestGetMasksLInks(t *testing.T) {
 	}{
 		{"success", "https://www.google.com", "https://", "https://**************"},
 		{"successToo", "hello world", "https://", "hello world"},
-		{"fail", "https://www.google.com", "https://", "https://www.google.com"},
+		// {"fail", "https://www.google.com", "https://", "https://www.google.com"},
 	}
 
 	for _, tc := range testCases {
@@ -28,4 +28,10 @@ func TestGetMasksLInks(t *testing.T) {
 		})
 	}
 
+}
+
+func FuzzGetMasksLInks(f *testing.F) {
+	f.Fuzz(func(t *testing.T, s string, url string) {
+		masker.GetMasksLInks(s, url)
+	})
 }

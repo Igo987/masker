@@ -2,10 +2,17 @@ package masker
 
 func GetMasksLInks(s string, url string) string {
 	arrWords := getArrWords(s)
-	flag := false
+	if (arrWords == nil) || (len(arrWords) == 0) {
+		return s
+	}
+	var flag bool
 	all := make([]byte, 0, 100)
 	for _, word := range arrWords {
 		strRune := []byte(word)
+		if len(word) < len(url) {
+			all = append(all, strRune...)
+			continue
+		}
 		for i := 0; i < len(url); i++ {
 			if url[i] == strRune[i] {
 				flag = true
@@ -26,6 +33,9 @@ func GetMasksLInks(s string, url string) string {
 }
 
 func getArrWords(s string) []string {
+	if len(s) == 0 {
+		return nil
+	}
 	var result []string
 	byteWord := make([]byte, 0, 100)
 	for _, item := range s {
@@ -33,7 +43,6 @@ func getArrWords(s string) []string {
 
 		if (item == ' ') || (item == '\n') || (item == ',') || (item == '-') {
 			result = append(result, string(byteWord))
-			// result = append(result, " ")
 			byteWord = nil
 		}
 	}
